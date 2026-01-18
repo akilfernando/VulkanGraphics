@@ -1,0 +1,30 @@
+#include "vulkanEngineWindow.hpp"
+
+#include <stdexcept>
+
+namespace VulkanEngine {
+	VulkanEngineWindow::VulkanEngineWindow(int w, int h, std::string name) : width{ w }, height{ h }, windowName{ name } {
+		initWindow();
+	}
+	VulkanEngineWindow::~VulkanEngineWindow() {
+		if (window) {
+			glfwDestroyWindow(window);
+		}
+		// Terminate GLFW if it was initialized; glfwTerminate is safe to call even if window is null
+		glfwTerminate();
+	}
+	void VulkanEngineWindow::initWindow() {
+		if (!glfwInit()) {
+			throw std::runtime_error("Failed to initialize GLFW");
+		}
+
+		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+
+		window = glfwCreateWindow(width, height, windowName.c_str(), nullptr, nullptr);
+		if (!window) {
+			glfwTerminate();
+			throw std::runtime_error("Failed to create GLFW window");
+		}
+	}
+} // namespace VulkanEngine
