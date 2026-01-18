@@ -13,6 +13,9 @@ namespace VulkanEngine {
 		~VulkanEngineWindow();
 
 		bool shouldClose() const { return window && glfwWindowShouldClose(window); }
+
+		void createWindowSurface(VkInstance instance, VkSurfaceKHR* surface);
+
 		void pollEvents() { if (window) glfwPollEvents(); }
 
 	private:

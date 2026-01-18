@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="vulkanEngineDevice.cpp" />
     <ClCompile Include="vulkanEnginePipeline.cpp" />
     <ClCompile Include="vulkanGraphicsApp.cpp" />
     <ClCompile Include="vulkanGraphicsApp.hpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="vulkanEngineWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="vulkanEngineDevice.hpp" />
     <ClInclude Include="vulkanEnginePipeline.hpp" />
     <ClInclude Include="vulkanEngineWindow.hpp" />
   </ItemGroup>

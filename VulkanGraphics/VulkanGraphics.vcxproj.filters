@@ -30,12 +30,18 @@
     <ClCompile Include="vulkanEnginePipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="vulkanEngineDevice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vulkanEngineWindow.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="vulkanEnginePipeline.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vulkanEngineDevice.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
