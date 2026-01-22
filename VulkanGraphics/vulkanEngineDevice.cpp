@@ -531,4 +531,4 @@ void VulkanEngineDevice::createImageWithInfo(
   }
 }
 
-}  // namespace lve
+}  // namespace VulkanEngine

@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="VulkanGraphics/VulkanGraphics.vcxproj" />
+  <Project Path="VulkanGraphics/VulkanGraphics.vcxproj" Id="77025542-2168-45c4-98e7-df8c7a2ee80d" />
 </Solution>
