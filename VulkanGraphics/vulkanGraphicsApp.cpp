@@ -3,12 +3,14 @@
 //std
 #include <stdexcept>
 #include <array>
+#include <vector>
 
 namespace VulkanEngine
 {
 
 	VulkanGraphicsApp::VulkanGraphicsApp()
 	{
+		loadModels();
 		createPipelineLayout();
 		createPipeline();
 		createCommandBuffers();
@@ -21,13 +23,22 @@ namespace VulkanEngine
 
 	void VulkanGraphicsApp::run()
 	{
+		vkDeviceWaitIdle(vulkanDevice.device());
 		while (!vulkanWindow.shouldClose())
 		{
 			vulkanWindow.pollEvents();
 			drawFrame();
 		}
+	}
 
-		vkDeviceWaitIdle(vulkanDevice.device());
+	void VulkanGraphicsApp::loadModels() {
+		// Example: load a simple triangle model
+		std::vector<VulkanEngineModel::Vertex> vertices = {
+			{{0.0f, -0.5f}},
+			{{0.5f, 0.5f}},
+			{{-0.5f, 0.5f}}
+		};
+		vulkanModel = std::make_unique<VulkanEngineModel>(vulkanDevice, vertices);
 	}
 
 	void VulkanGraphicsApp::createPipelineLayout() {
@@ -105,7 +116,8 @@ namespace VulkanEngine
 			vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 			vulkanEnginePipeline->bind(commandBuffers[i]);
-			vkCmdDraw(commandBuffers[i], 3, 1, 0, 0);
+			vulkanModel->bind(commandBuffers[i]);
+			vulkanModel->draw(commandBuffers[i]);
 
 			vkCmdEndRenderPass(commandBuffers[i]);
 			if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS) {

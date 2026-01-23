@@ -4,6 +4,7 @@
 #include "vulkanEnginePipeline.hpp"
 #include "vulkanEngineDevice.hpp"
 #include "vulkanEngineSwapChain.hpp"
+#include "vulkanEngineModel.hpp"
 
 //std
 #include <memory>
@@ -26,6 +27,7 @@ namespace VulkanEngine {
 		void run();
 
 	private:
+		void loadModels();
 		void createPipelineLayout();
 		void createPipeline();
 		void createCommandBuffers();
@@ -37,6 +39,7 @@ namespace VulkanEngine {
 		std::unique_ptr<VulkanEnginePipeline> vulkanEnginePipeline;
 		VkPipelineLayout pipelineLayout;
 		std::vector<VkCommandBuffer> commandBuffers;
+		std::unique_ptr<VulkanEngineModel> vulkanModel;
 
 	}; // class VulkanGraphicsApp
 
