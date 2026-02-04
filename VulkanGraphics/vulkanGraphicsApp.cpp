@@ -34,9 +34,9 @@ namespace VulkanEngine
 	void VulkanGraphicsApp::loadModels() {
 		// Example: load a simple triangle model
 		std::vector<VulkanEngineModel::Vertex> vertices = {
-			{{0.0f, -0.5f}},
-			{{0.5f, 0.5f}},
-			{{-0.5f, 0.5f}}
+			{{0.0f, -0.5f}, {1.0f, 0.0f, 0.0f}},
+			{{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
+			{{-0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}}
 		};
 		vulkanModel = std::make_unique<VulkanEngineModel>(vulkanDevice, vertices);
 	}
