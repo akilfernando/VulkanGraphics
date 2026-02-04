@@ -35,7 +35,7 @@ class VulkanEngineDevice {
 
   // Not copyable or movable
   VulkanEngineDevice(const VulkanEngineDevice &) = delete;
-  void operator=(const VulkanEngineDevice &) = delete;
+  VulkanEngineDevice &operator=(const VulkanEngineDevice &) = delete;
   VulkanEngineDevice(VulkanEngineDevice &&) = delete;
   VulkanEngineDevice &operator=(VulkanEngineDevice &&) = delete;
 

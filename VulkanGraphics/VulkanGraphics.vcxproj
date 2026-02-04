@@ -144,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vulkanEngineDevice.hpp" />
+    <ClInclude Include="vulkanEngineGameObject.hpp" />
     <ClInclude Include="vulkanEngineModel.hpp" />
     <ClInclude Include="vulkanEnginePipeline.hpp" />
     <ClInclude Include="vulkanEngineSwapChain.hpp" />
