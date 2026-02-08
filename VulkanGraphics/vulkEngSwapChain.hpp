@@ -40,6 +40,11 @@ class VulkEngSwapChain {
   VkResult acquireNextImage(uint32_t *imageIndex);
   VkResult submitCommandBuffers(const VkCommandBuffer *buffers, uint32_t *imageIndex);
 
+  bool compareSwapFormats(const VulkEngSwapChain &other) const {
+    return other.swapChainDepthFormat == swapChainDepthFormat &&
+           other.swapChainImageFormat == swapChainImageFormat;
+  }
+
  private:
   void init();
   void createSwapChain();
@@ -57,6 +62,7 @@ class VulkEngSwapChain {
   VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
 
   VkFormat swapChainImageFormat;
+  VkFormat swapChainDepthFormat;
   VkExtent2D swapChainExtent;
 
   std::vector<VkFramebuffer> swapChainFramebuffers;

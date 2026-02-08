@@ -25,20 +25,15 @@ namespace VulkanEngine
 
 		vkDeviceWaitIdle(vulkanDevice.device());
 
-		if (vulkSwapChain) {
-			vulkSwapChain.reset();
+		if (vulkSwapChain == nullptr) {
+			vulkSwapChain = std::make_unique<VulkEngSwapChain>(vulkanDevice, extent);
 		}
-
-		vulkSwapChain = std::make_unique<VulkEngSwapChain>(vulkanDevice, extent);
-
-		if (commandBuffers.size() != vulkSwapChain->imageCount()) {
-			if (!commandBuffers.empty()) {
-				freeCommandBuffers();
-			}
-			createCommandBuffers();
-		}
-		else if (commandBuffers.empty()) {
-			createCommandBuffers();
+		else {
+			std::shared_ptr<VulkEngSwapChain> oldSwapChain = std::move(vulkSwapChain);
+			vulkSwapChain = std::make_unique<VulkEngSwapChain>(vulkanDevice, extent, oldSwapChain);
+			 if (!oldSwapChain->compareSwapFormats(*vulkSwapChain.get())) {
+				 throw std::runtime_error("Swap chain image or depth format has changed!");
+			 }
 		}
 	}
 
@@ -53,7 +48,7 @@ namespace VulkanEngine
 			);
 		}
 
-		commandBuffers.resize(vulkSwapChain->imageCount());
+		commandBuffers.resize(VulkEngSwapChain::MAX_FRAMES_IN_FLIGHT);
 
 		VkCommandBufferAllocateInfo allocInfo{};
 		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -121,6 +116,7 @@ namespace VulkanEngine
 		}
 		
 		isFrameStarted = false;
+		currentFrameIndex = (currentFrameIndex + 1) % VulkEngSwapChain::MAX_FRAMES_IN_FLIGHT;
 	}
 	void VulkEngRenderer::beginSwapChainRenderPass(VkCommandBuffer commandBuffer) {
 		assert(isFrameStarted && "Cannot call beginSwapChainRenderPass if frame not in progress");
