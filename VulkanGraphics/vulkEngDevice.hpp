@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vulkanEngineWindow.hpp"
+#include "vulkEngWindow.hpp"
 
 // std lib headers
 #include <string>
@@ -22,7 +22,7 @@ struct QueueFamilyIndices {
   bool isComplete() { return graphicsFamilyHasValue && presentFamilyHasValue; }
 };
 
-class VulkanEngineDevice {
+class VulkEngDevice {
  public:
 #ifdef NDEBUG
   const bool enableValidationLayers = false;
@@ -30,14 +30,14 @@ class VulkanEngineDevice {
   const bool enableValidationLayers = true;
 #endif
 
-  VulkanEngineDevice(VulkanEngineWindow &window);
-  ~VulkanEngineDevice();
+  VulkEngDevice(VulkEngWindow &window);
+  ~VulkEngDevice();
 
   // Not copyable or movable
-  VulkanEngineDevice(const VulkanEngineDevice &) = delete;
-  VulkanEngineDevice &operator=(const VulkanEngineDevice &) = delete;
-  VulkanEngineDevice(VulkanEngineDevice &&) = delete;
-  VulkanEngineDevice &operator=(VulkanEngineDevice &&) = delete;
+  VulkEngDevice(const VulkEngDevice &) = delete;
+  VulkEngDevice &operator=(const VulkEngDevice &) = delete;
+  VulkEngDevice(VulkEngDevice &&) = delete;
+  VulkEngDevice &operator=(VulkEngDevice &&) = delete;
 
   VkCommandPool getCommandPool() { return commandPool; }
   VkDevice device() { return device_; }
@@ -93,7 +93,7 @@ class VulkanEngineDevice {
   VkInstance instance;
   VkDebugUtilsMessengerEXT debugMessenger;
   VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
-  VulkanEngineWindow &window;
+  VulkEngWindow &window;
   VkCommandPool commandPool;
 
   VkDevice device_;

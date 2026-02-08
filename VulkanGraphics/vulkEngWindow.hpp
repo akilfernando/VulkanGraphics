@@ -6,11 +6,11 @@
 #include <string>
 
 namespace VulkanEngine {
-	class VulkanEngineWindow {
+	class VulkEngWindow {
 
 	public:
-		VulkanEngineWindow(int w, int h, std::string name);
-		~VulkanEngineWindow();
+		VulkEngWindow(int w, int h, std::string name);
+		~VulkEngWindow();
 
 		bool shouldClose() const { return window && glfwWindowShouldClose(window); }
 

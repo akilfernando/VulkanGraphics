@@ -1,4 +1,4 @@
-#include "vulkanGraphicsApp.hpp"
+#include "vulkEngApp.hpp"
 
 //std
 #include <cstdlib>
@@ -6,7 +6,7 @@
 #include <stdexcept>
 
 int main() {
-	VulkanEngine::VulkanGraphicsApp app;
+	VulkanEngine::VulkEngApp app;
 
 	try {
 		app.run();

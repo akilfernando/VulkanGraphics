@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vulkanEngineDevice.hpp"
+#include "vulkEngDevice.hpp"
 
 // lib
 #define GLM_FORCE_RADIANS
@@ -12,7 +12,7 @@
 
 namespace VulkanEngine
 {
-	class VulkanEngineModel
+	class VulkEngModel
 	{
 	public:
 
@@ -24,11 +24,11 @@ namespace VulkanEngine
 			static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions();
 		};
 
-		VulkanEngineModel(VulkanEngineDevice &device, const std::vector<Vertex> &vertices);
-		~VulkanEngineModel();
+		VulkEngModel(VulkEngDevice &device, const std::vector<Vertex> &vertices);
+		~VulkEngModel();
 
-		VulkanEngineModel(const VulkanEngineModel&) = delete;
-		VulkanEngineModel& operator=(const VulkanEngineModel&) = delete;
+		VulkEngModel(const VulkEngModel&) = delete;
+		VulkEngModel& operator=(const VulkEngModel&) = delete;
 
 		void bind(VkCommandBuffer commandBuffer);
 		void draw(VkCommandBuffer commandBuffer);
@@ -38,7 +38,7 @@ namespace VulkanEngine
 
 		void createVertexBuffers(const std::vector<Vertex> &vertices);
 		
-		VulkanEngineDevice& vulkanDevice;
+		VulkEngDevice& vulkanDevice;
 		VkBuffer vertexBuffer;
 		VkDeviceMemory vertexBufferMemory;
 		uint32_t vertexCount;

@@ -1,4 +1,4 @@
-#include "vulkanEngineSwapChain.hpp"
+#include "vulkEngSwapChain.hpp"
 
 // std
 #include <array>
@@ -11,12 +11,12 @@
 
 namespace VulkanEngine {
 
-VulkanEngineSwapChain::VulkanEngineSwapChain(VulkanEngineDevice &deviceRef, VkExtent2D extent)
+VulkEngSwapChain::VulkEngSwapChain(VulkEngDevice &deviceRef, VkExtent2D extent)
     : device{deviceRef}, windowExtent{extent} {
     init();
 }
 
-VulkanEngineSwapChain::VulkanEngineSwapChain(VulkanEngineDevice& deviceRef, VkExtent2D extent, std::shared_ptr<VulkanEngineSwapChain> previous)
+VulkEngSwapChain::VulkEngSwapChain(VulkEngDevice& deviceRef, VkExtent2D extent, std::shared_ptr<VulkEngSwapChain> previous)
     : device{ deviceRef }, windowExtent{ extent }, oldSwapChain{ previous } {
     init();
 
@@ -24,7 +24,7 @@ VulkanEngineSwapChain::VulkanEngineSwapChain(VulkanEngineDevice& deviceRef, VkEx
 	oldSwapChain = nullptr;
 }
 
-void VulkanEngineSwapChain::init() {
+void VulkEngSwapChain::init() {
   createSwapChain();
   createImageViews();
   createRenderPass();
@@ -33,7 +33,7 @@ void VulkanEngineSwapChain::init() {
   createSyncObjects();
 }
 
-VulkanEngineSwapChain::~VulkanEngineSwapChain() {
+VulkEngSwapChain::~VulkEngSwapChain() {
   for (auto imageView : swapChainImageViews) {
     vkDestroyImageView(device.device(), imageView, nullptr);
   }
@@ -64,7 +64,7 @@ VulkanEngineSwapChain::~VulkanEngineSwapChain() {
   }
 }
 
-VkResult VulkanEngineSwapChain::acquireNextImage(uint32_t *imageIndex) {
+VkResult VulkEngSwapChain::acquireNextImage(uint32_t *imageIndex) {
   vkWaitForFences(
       device.device(),
       1,
@@ -83,7 +83,7 @@ VkResult VulkanEngineSwapChain::acquireNextImage(uint32_t *imageIndex) {
   return result;
 }
 
-VkResult VulkanEngineSwapChain::submitCommandBuffers(
+VkResult VulkEngSwapChain::submitCommandBuffers(
     const VkCommandBuffer *buffers, uint32_t *imageIndex) {
   if (imagesInFlight[*imageIndex] != VK_NULL_HANDLE) {
     vkWaitForFences(device.device(), 1, &imagesInFlight[*imageIndex], VK_TRUE, UINT64_MAX);
@@ -131,7 +131,7 @@ VkResult VulkanEngineSwapChain::submitCommandBuffers(
   return result;
 }
 
-void VulkanEngineSwapChain::createSwapChain() {
+void VulkEngSwapChain::createSwapChain() {
   SwapChainSupportDetails swapChainSupport = device.getSwapChainSupport();
 
   VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
@@ -192,7 +192,7 @@ void VulkanEngineSwapChain::createSwapChain() {
   swapChainExtent = extent;
 }
 
-void VulkanEngineSwapChain::createImageViews() {
+void VulkEngSwapChain::createImageViews() {
   swapChainImageViews.resize(swapChainImages.size());
   for (size_t i = 0; i < swapChainImages.size(); i++) {
     VkImageViewCreateInfo viewInfo{};
@@ -213,7 +213,7 @@ void VulkanEngineSwapChain::createImageViews() {
   }
 }
 
-void VulkanEngineSwapChain::createRenderPass() {
+void VulkEngSwapChain::createRenderPass() {
   VkAttachmentDescription depthAttachment{};
   depthAttachment.format = findDepthFormat();
   depthAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
@@ -274,7 +274,7 @@ void VulkanEngineSwapChain::createRenderPass() {
   }
 }
 
-void VulkanEngineSwapChain::createFramebuffers() {
+void VulkEngSwapChain::createFramebuffers() {
   swapChainFramebuffers.resize(imageCount());
   for (size_t i = 0; i < imageCount(); i++) {
     std::array<VkImageView, 2> attachments = {swapChainImageViews[i], depthImageViews[i]};
@@ -299,7 +299,7 @@ void VulkanEngineSwapChain::createFramebuffers() {
   }
 }
 
-void VulkanEngineSwapChain::createDepthResources() {
+void VulkEngSwapChain::createDepthResources() {
   VkFormat depthFormat = findDepthFormat();
   VkExtent2D swapChainExtent = getSwapChainExtent();
 
@@ -347,7 +347,7 @@ void VulkanEngineSwapChain::createDepthResources() {
   }
 }
 
-void VulkanEngineSwapChain::createSyncObjects() {
+void VulkEngSwapChain::createSyncObjects() {
   imageAvailableSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
   renderFinishedSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
   inFlightFences.resize(MAX_FRAMES_IN_FLIGHT);
@@ -371,7 +371,7 @@ void VulkanEngineSwapChain::createSyncObjects() {
   }
 }
 
-VkSurfaceFormatKHR VulkanEngineSwapChain::chooseSwapSurfaceFormat(
+VkSurfaceFormatKHR VulkEngSwapChain::chooseSwapSurfaceFormat(
     const std::vector<VkSurfaceFormatKHR> &availableFormats) {
   for (const auto &availableFormat : availableFormats) {
     if (availableFormat.format == VK_FORMAT_B8G8R8A8_SRGB &&
@@ -383,7 +383,7 @@ VkSurfaceFormatKHR VulkanEngineSwapChain::chooseSwapSurfaceFormat(
   return availableFormats[0];
 }
 
-VkPresentModeKHR VulkanEngineSwapChain::chooseSwapPresentMode(
+VkPresentModeKHR VulkEngSwapChain::chooseSwapPresentMode(
     const std::vector<VkPresentModeKHR> &availablePresentModes) {
   for (const auto &availablePresentMode : availablePresentModes) {
     if (availablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR) {
@@ -403,7 +403,7 @@ VkPresentModeKHR VulkanEngineSwapChain::chooseSwapPresentMode(
   return VK_PRESENT_MODE_FIFO_KHR;
 }
 
-VkExtent2D VulkanEngineSwapChain::chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities) {
+VkExtent2D VulkEngSwapChain::chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities) {
   if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
     return capabilities.currentExtent;
   } else {
@@ -419,7 +419,7 @@ VkExtent2D VulkanEngineSwapChain::chooseSwapExtent(const VkSurfaceCapabilitiesKH
   }
 }
 
-VkFormat VulkanEngineSwapChain::findDepthFormat() {
+VkFormat VulkEngSwapChain::findDepthFormat() {
   return device.findSupportedFormat(
       {VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT},
       VK_IMAGE_TILING_OPTIMAL,

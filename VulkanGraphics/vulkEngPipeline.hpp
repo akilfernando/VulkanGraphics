@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vulkanEngineDevice.hpp"
+#include "vulkEngDevice.hpp"
 
 // std
 #include <string>
@@ -27,18 +27,18 @@ namespace VulkanEngine {
 		uint32_t subpass = 0;
 	};
 
-	class VulkanEnginePipeline {
+	class VulkEngPipeline {
 	public:
-		VulkanEnginePipeline(
-			VulkanEngineDevice &device, 
+		VulkEngPipeline(
+			VulkEngDevice &device, 
 			const std::string& vertFilepath, 
 			const std::string& fragFilepath, 
 			const PipelineConfigInfo& configInfo
 		);
-		~VulkanEnginePipeline();
+		~VulkEngPipeline();
 
-		VulkanEnginePipeline(const VulkanEnginePipeline&) = delete;
-		VulkanEnginePipeline& operator=(const VulkanEnginePipeline&) = delete;
+		VulkEngPipeline(const VulkEngPipeline&) = delete;
+		VulkEngPipeline& operator=(const VulkEngPipeline&) = delete;
 
 		void bind(VkCommandBuffer commandBuffer);
 
@@ -55,7 +55,7 @@ namespace VulkanEngine {
 
 		void createShaderModule(const std::vector<char>& code, VkShaderModule* shaderModule);
 
-		VulkanEngineDevice& vulkanDevice;
+		VulkEngDevice& vulkanDevice;
 		VkPipeline graphicsPipeline;
 		VkShaderModule vertShaderModule;
 		VkShaderModule fragShaderModule;

@@ -1,5 +1,5 @@
-#include "vulkanEnginePipeline.hpp"
-#include "vulkanEngineModel.hpp"
+#include "vulkEngPipeline.hpp"
+#include "vulkEngModel.hpp"
 
 // std
 #include <fstream>
@@ -8,8 +8,8 @@
 
 namespace VulkanEngine {
 
-	VulkanEnginePipeline::VulkanEnginePipeline(
-		VulkanEngineDevice& device,
+	VulkEngPipeline::VulkEngPipeline(
+		VulkEngDevice& device,
 		const std::string& vertFilepath,
 		const std::string& fragFilepath,
 		const PipelineConfigInfo& configInfo
@@ -17,7 +17,7 @@ namespace VulkanEngine {
 		createGraphicsPipeline(vertFilepath, fragFilepath, configInfo);
 	}
 
-	VulkanEnginePipeline::~VulkanEnginePipeline() {
+	VulkEngPipeline::~VulkEngPipeline() {
 		if (vulkanDevice.device() != VK_NULL_HANDLE) {
 			if (graphicsPipeline != VK_NULL_HANDLE) {
 				vkDestroyPipeline(vulkanDevice.device(), graphicsPipeline, nullptr);
@@ -31,7 +31,7 @@ namespace VulkanEngine {
 		}
 	}
 
-	std::vector<char> VulkanEnginePipeline::readFile(const std::string& filepath) {
+	std::vector<char> VulkEngPipeline::readFile(const std::string& filepath) {
 
 		std::ifstream file{ filepath, std::ios::ate | std::ios::binary };
 
@@ -49,7 +49,7 @@ namespace VulkanEngine {
 		return buffer;
 	}
 
-	void VulkanEnginePipeline::createGraphicsPipeline(
+	void VulkEngPipeline::createGraphicsPipeline(
 		const std::string& vertFilepath,
 		const std::string& fragFilepath,
 		const PipelineConfigInfo& configInfo
@@ -81,8 +81,8 @@ namespace VulkanEngine {
 		shaderStages[1].pNext = nullptr;
 		shaderStages[1].pSpecializationInfo = nullptr;
 
-		auto bindingDescriptions = VulkanEngineModel::Vertex::getBindingDescriptions();
-		auto attributeDescriptions = VulkanEngineModel::Vertex::getAttributeDescriptions();
+		auto bindingDescriptions = VulkEngModel::Vertex::getBindingDescriptions();
+		auto attributeDescriptions = VulkEngModel::Vertex::getAttributeDescriptions();
 
 		VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
 		vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -124,7 +124,7 @@ namespace VulkanEngine {
 
 	}
 
-	void VulkanEnginePipeline::createShaderModule(
+	void VulkEngPipeline::createShaderModule(
 		const std::vector<char>& code,
 		VkShaderModule* shaderModule
 	) {
@@ -143,11 +143,11 @@ namespace VulkanEngine {
 		}
 	}
 
-	void VulkanEnginePipeline::bind(VkCommandBuffer commandBuffer) {
+	void VulkEngPipeline::bind(VkCommandBuffer commandBuffer) {
 		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
 	}
 
-	void VulkanEnginePipeline::defaultPipelineConfigInfo(PipelineConfigInfo& configInfo) {
+	void VulkEngPipeline::defaultPipelineConfigInfo(PipelineConfigInfo& configInfo) {
 
 		configInfo.inputAssemblyInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 		configInfo.inputAssemblyInfo.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;

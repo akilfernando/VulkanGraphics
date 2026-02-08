@@ -133,22 +133,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="vulkanEngineDevice.cpp" />
-    <ClCompile Include="vulkanEngineModel.cpp" />
-    <ClCompile Include="vulkanEnginePipeline.cpp" />
-    <ClCompile Include="vulkanEngineSwapChain.cpp" />
-    <ClCompile Include="vulkanGraphicsApp.cpp" />
-    <ClCompile Include="vulkanGraphicsApp.hpp" />
+    <ClCompile Include="vulkEngDevice.cpp" />
+    <ClCompile Include="vulkEngModel.cpp" />
+    <ClCompile Include="vulkEngPipeline.cpp" />
+    <ClCompile Include="vulkEngRenderer.cpp" />
+    <ClCompile Include="vulkEngSwapChain.cpp" />
+    <ClCompile Include="vulkEngApp.cpp" />
+    <ClCompile Include="vulkEngApp.hpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="vulkanEngineWindow.cpp" />
+    <ClCompile Include="vulkEngWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="vulkanEngineDevice.hpp" />
-    <ClInclude Include="vulkanEngineGameObject.hpp" />
-    <ClInclude Include="vulkanEngineModel.hpp" />
-    <ClInclude Include="vulkanEnginePipeline.hpp" />
-    <ClInclude Include="vulkanEngineSwapChain.hpp" />
-    <ClInclude Include="vulkanEngineWindow.hpp" />
+    <ClInclude Include="vulkEngDevice.hpp" />
+    <ClInclude Include="vulkEngGameObj.hpp" />
+    <ClInclude Include="vulkEngModel.hpp" />
+    <ClInclude Include="vulkEngPipeline.hpp" />
+    <ClInclude Include="vulkEngRenderer.hpp" />
+    <ClInclude Include="vulkEngSwapChain.hpp" />
+    <ClInclude Include="vulkEngWindow.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="compile.bat" />

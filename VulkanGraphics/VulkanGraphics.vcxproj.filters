@@ -18,45 +18,51 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vulkanEngineWindow.cpp">
+    <ClCompile Include="vulkEngWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vulkanGraphicsApp.hpp">
+    <ClCompile Include="vulkEngApp.hpp">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="vulkanGraphicsApp.cpp">
+    <ClCompile Include="vulkEngApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vulkanEnginePipeline.cpp">
+    <ClCompile Include="vulkEngPipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vulkanEngineDevice.cpp">
+    <ClCompile Include="vulkEngDevice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vulkanEngineSwapChain.cpp">
+    <ClCompile Include="vulkEngSwapChain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vulkanEngineModel.cpp">
+    <ClCompile Include="vulkEngModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vulkEngRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="vulkanEngineWindow.hpp">
+    <ClInclude Include="vulkEngWindow.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vulkanEnginePipeline.hpp">
+    <ClInclude Include="vulkEngPipeline.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vulkanEngineDevice.hpp">
+    <ClInclude Include="vulkEngDevice.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vulkanEngineSwapChain.hpp">
+    <ClInclude Include="vulkEngSwapChain.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vulkanEngineModel.hpp">
+    <ClInclude Include="vulkEngModel.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vulkanEngineGameObject.hpp">
+    <ClInclude Include="vulkEngGameObj.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vulkEngRenderer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

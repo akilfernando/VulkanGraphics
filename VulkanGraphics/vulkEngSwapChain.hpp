@@ -1,6 +1,6 @@
 #pragma once
 
-#include "VulkanEngineDevice.hpp"
+#include "vulkEngDevice.hpp"
 
 // vulkan headers
 #include <vulkan/vulkan.h>
@@ -12,16 +12,16 @@
 
 namespace VulkanEngine {
 
-class VulkanEngineSwapChain {
+class VulkEngSwapChain {
  public:
   static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
-  VulkanEngineSwapChain(VulkanEngineDevice& deviceRef, VkExtent2D windowExtent);
-  VulkanEngineSwapChain(VulkanEngineDevice &deviceRef, VkExtent2D windowExtent,std::shared_ptr<VulkanEngineSwapChain> previous);
-  ~VulkanEngineSwapChain();
+  VulkEngSwapChain(VulkEngDevice& deviceRef, VkExtent2D windowExtent);
+  VulkEngSwapChain(VulkEngDevice &deviceRef, VkExtent2D windowExtent,std::shared_ptr<VulkEngSwapChain> previous);
+  ~VulkEngSwapChain();
 
-  VulkanEngineSwapChain(const VulkanEngineSwapChain &) = delete;
-  VulkanEngineSwapChain &operator=(const VulkanEngineSwapChain &) = delete;
+  VulkEngSwapChain(const VulkEngSwapChain &) = delete;
+  VulkEngSwapChain &operator=(const VulkEngSwapChain &) = delete;
 
   VkFramebuffer getFrameBuffer(int index) { return swapChainFramebuffers[index]; }
   VkRenderPass getRenderPass() { return renderPass; }
@@ -68,11 +68,11 @@ class VulkanEngineSwapChain {
   std::vector<VkImage> swapChainImages;
   std::vector<VkImageView> swapChainImageViews;
 
-  VulkanEngineDevice &device;
+  VulkEngDevice &device;
   VkExtent2D windowExtent;
 
   VkSwapchainKHR swapChain;
-  std::shared_ptr<VulkanEngineSwapChain> oldSwapChain;
+  std::shared_ptr<VulkEngSwapChain> oldSwapChain;
 
   std::vector<VkSemaphore> imageAvailableSemaphores;
   std::vector<VkSemaphore> renderFinishedSemaphores;

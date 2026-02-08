@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vulkanEngineModel.hpp"
+#include "vulkEngModel.hpp"
 
 //std
 #include <memory>
@@ -22,28 +22,28 @@ namespace VulkanEngine {
 		}
 	};
 
-	class VulkanEngineGameObject {
+	class VulkEngGameObj {
 	public:
 		using id_t = unsigned int;
 
-		static VulkanEngineGameObject createGameObject() {
+		static VulkEngGameObj createGameObject() {
 			static id_t currentId = 0;
-			return VulkanEngineGameObject{ currentId++ };
+			return VulkEngGameObj{ currentId++ };
 		}
 
-		VulkanEngineGameObject(const VulkanEngineGameObject&) = delete;
-		VulkanEngineGameObject& operator=(const VulkanEngineGameObject&) = delete;
-		VulkanEngineGameObject(VulkanEngineGameObject&&) = default;
-		VulkanEngineGameObject& operator=(VulkanEngineGameObject&&) = default;
+		VulkEngGameObj(const VulkEngGameObj&) = delete;
+		VulkEngGameObj& operator=(const VulkEngGameObj&) = delete;
+		VulkEngGameObj(VulkEngGameObj&&) = default;
+		VulkEngGameObj& operator=(VulkEngGameObj&&) = default;
 
 		id_t getId() const { return id; }
 
-		std::shared_ptr<VulkanEngineModel> model{};
+		std::shared_ptr<VulkEngModel> model{};
 		glm::vec3 color{};
 		Transform2dComponent transform2d{};
 
 	private:
-		VulkanEngineGameObject(id_t objId) : id{ objId } {}
+		VulkEngGameObj(id_t objId) : id{ objId } {}
 
 		id_t id;
 	};

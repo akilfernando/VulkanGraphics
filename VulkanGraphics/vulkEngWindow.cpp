@@ -1,20 +1,20 @@
-#include "vulkanEngineWindow.hpp"
+#include "vulkEngWindow.hpp"
 
 #include <stdexcept>
-#include "vulkanEngineDevice.hpp"
+#include "vulkEngDevice.hpp"
 
 namespace VulkanEngine {
-	VulkanEngineWindow::VulkanEngineWindow(int w, int h, std::string name) : width{ w }, height{ h }, windowName{ name } {
+	VulkEngWindow::VulkEngWindow(int w, int h, std::string name) : width{ w }, height{ h }, windowName{ name } {
 		initWindow();
 	}
-	VulkanEngineWindow::~VulkanEngineWindow() {
+	VulkEngWindow::~VulkEngWindow() {
 		if (window) {
 			glfwDestroyWindow(window);
 		}
 		// Terminate GLFW if it was initialized; glfwTerminate is safe to call even if window is null
 		glfwTerminate();
 	}
-	void VulkanEngineWindow::initWindow() {
+	void VulkEngWindow::initWindow() {
 		if (!glfwInit()) {
 			throw std::runtime_error("Failed to initialize GLFW");
 		}
@@ -31,14 +31,14 @@ namespace VulkanEngine {
 		}
 	}
 
-	void VulkanEngineWindow::createWindowSurface(VkInstance instance, VkSurfaceKHR* surface) {
+	void VulkEngWindow::createWindowSurface(VkInstance instance, VkSurfaceKHR* surface) {
 		if (glfwCreateWindowSurface(instance, window, nullptr, surface) != VK_SUCCESS) {
 			throw std::runtime_error("Failed to create window surface");
 		}
 	}
 
-	void VulkanEngineWindow::framebufferResizeCallback(GLFWwindow* window, int width, int height) {
-		auto vulkanWindow = reinterpret_cast<VulkanEngineWindow*>(glfwGetWindowUserPointer(window));
+	void VulkEngWindow::framebufferResizeCallback(GLFWwindow* window, int width, int height) {
+		auto vulkanWindow = reinterpret_cast<VulkEngWindow*>(glfwGetWindowUserPointer(window));
 		vulkanWindow->framebufferResized = true;
 		vulkanWindow->width = width;
 		vulkanWindow->height = height;
