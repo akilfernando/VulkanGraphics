@@ -22,6 +22,11 @@ namespace VulkanEngine {
 		}
 	};
 
+	struct RigidBody2dComponent {
+		glm::vec2 velocity;
+		float mass{1.0f};
+	};
+
 	class VulkEngGameObj {
 	public:
 		using id_t = unsigned int;
@@ -41,6 +46,7 @@ namespace VulkanEngine {
 		std::shared_ptr<VulkEngModel> model{};
 		glm::vec3 color{};
 		Transform2dComponent transform2d{};
+		RigidBody2dComponent rigidBody2d{};
 
 	private:
 		VulkEngGameObj(id_t objId) : id{ objId } {}
