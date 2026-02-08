@@ -1,4 +1,5 @@
 #include "vulkEngApp.hpp"
+#include "vulkEngRenderSystem.hpp"
 
 //libs
 #define GLM_FORCE_RADIANS
@@ -13,27 +14,17 @@
 
 namespace VulkanEngine
 {
-
-	struct SimplePushConstantData {
-		glm::mat2 transform{1.f};
-		glm::vec2 offset;
-		alignas(16) glm::vec3 color;
-	};
-
 	VulkEngApp::VulkEngApp()
 	{
 		loadGameObjects();
-		createPipelineLayout();
-		createPipeline();
 	}
 
-	VulkEngApp::~VulkEngApp()
-	{
-		vkDestroyPipelineLayout(vulkanDevice.device(), pipelineLayout, nullptr);
-	}
+	VulkEngApp::~VulkEngApp() {}
 
 	void VulkEngApp::run()
 	{
+		VulkEngRenderSystem vulkEngRenderSystem{ vulkanDevice, vulkEngRenderer.getSwapChainRenderPass() };
+
 		vkDeviceWaitIdle(vulkanDevice.device());
 		while (!vulkanWindow.shouldClose())
 		{
@@ -41,7 +32,7 @@ namespace VulkanEngine
 			
 			if (auto commandBuffer = vulkEngRenderer.beginFrame()) {
 				vulkEngRenderer.beginSwapChainRenderPass(commandBuffer);
-				renderGameObjects(commandBuffer);
+				vulkEngRenderSystem.renderGameObjects(commandBuffer, gameObjects);
 				vulkEngRenderer.endSwapChainRenderPass(commandBuffer);
 				vulkEngRenderer.endFrame();
 			}
@@ -73,73 +64,6 @@ namespace VulkanEngine
 			triangle.transform2d.rotation = i * glm::pi<float>() * .025f;
 			triangle.color = colors[i % colors.size()];
 			gameObjects.push_back(std::move(triangle));
-		}
-	}
-
-	void VulkEngApp::createPipelineLayout() {
-
-		VkPushConstantRange pushConstantRange{};
-		pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
-		pushConstantRange.offset = 0;
-		pushConstantRange.size = sizeof(SimplePushConstantData);
-
-		VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
-		pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-		pipelineLayoutInfo.setLayoutCount = 0;
-		pipelineLayoutInfo.pSetLayouts = nullptr;
-		pipelineLayoutInfo.pushConstantRangeCount = 1;
-		pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
-		if (vkCreatePipelineLayout(
-			vulkanDevice.device(),
-			&pipelineLayoutInfo,
-			nullptr,
-			&pipelineLayout
-		) != VK_SUCCESS) {
-			throw std::runtime_error("failed to create pipeline layout!");
-		}
-	}
-
-	void VulkEngApp::createPipeline() {
-		assert(pipelineLayout != nullptr && "Cannot create pipeline before pipeline layout");
-
-		PipelineConfigInfo pipelineConfig{};
-		VulkEngPipeline::defaultPipelineConfigInfo(
-			pipelineConfig
-		);
-		pipelineConfig.renderPass = vulkEngRenderer.getSwapChainRenderPass();
-		pipelineConfig.pipelineLayout = pipelineLayout;
-		vulkEngPipeline = std::make_unique<VulkEngPipeline>(
-			vulkanDevice,
-			"shaders/simpleShader.vert.spv",
-			"shaders/simpleShader.frag.spv",
-			pipelineConfig
-		);
-	}
-
-	void VulkEngApp::renderGameObjects(VkCommandBuffer commandBuffer) {
-		int i = 0;
-		for (auto& obj : gameObjects) {
-			i += 1;
-			obj.transform2d.rotation =
-				glm::mod<float>(obj.transform2d.rotation + 0.001f * i, 2.f * glm::pi<float>());
-		}
-
-		vulkEngPipeline->bind(commandBuffer);
-		for (auto& obj : gameObjects) {
-			SimplePushConstantData push{};
-			push.offset = obj.transform2d.translation;
-			push.color = obj.color;
-			push.transform = obj.transform2d.mat2();
-
-			vkCmdPushConstants(
-				commandBuffer,
-				pipelineLayout,
-				VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT,
-				0,
-				sizeof(SimplePushConstantData),
-				&push);
-			obj.model->bind(commandBuffer);
-			obj.model->draw(commandBuffer);
 		}
 	}
 } // namespace VulkanEngine
